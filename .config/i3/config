@@ -10,10 +10,11 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # remove window titles
-new_window 1pixel
+#  new_window 1pixel
 
 # Constants
   set $mod Mod4
+ #for win key mod4
 
   set $base00 #26d926
   set $base01 #1f222d
@@ -34,7 +35,7 @@ new_window 1pixel
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:System San Fransisco Display Regular 10
+font pango:System San Fransisco Display Regular 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -153,7 +154,7 @@ bindsym $mod+Shift+0 move container to workspace $workspace0
 assign [class="Code"] $workspace4
 assign [class="Thunderbird"] $workspace7
 assign [class="Subl3"] $workspace3
-assign [class="Spotify"] $workspace0
+assign [class="^Spotify"] $workspace0
 assign [class="chromium"] $workspace2
 assign [class="Nautilus"] $workspace8
 assign [class="Okular"] $workspace5
@@ -206,8 +207,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        font pango: System San Francisco Display, FontAwesome 10
-    status_command i3blocks | /home/serhat/scripts/weather.py --unit c --wrap-i3-status 2344117
+        font pango: System San Francisco Display, FontAwesome 9
+    status_command i3blocks #| /home/serhat/scripts/weather.py --unit c --wrap-i3-status 2344117
     position top
 #    strip_workspace_numbers yes
     
@@ -225,26 +226,32 @@ bar {
 }
 
 #bindsym $mod+shift+x exec i3lock --color "#2f343f"
+
+# Screen Lock
 bindsym $mod+shift+x exec --no-startup-id /home/serhat/scripts/lock.sh
 
-#Chromium keybind
+# Chromium keybind
 bindsym $mod+shift+z exec --no-startup-id chromium
 
-#Ranger keybind
-bindsym $mod+shift+a exec --no-startup-id xfce4-terminal -e ranger
+# Ranger keybind
+#bindsym $mod+shift+a exec --no-startup-id xfce4-terminal -e ranger
 
+# Nautilus keybind
+bindsym $mod+shift+a exec --no-startup-id nautilus
+
+# Sound Controls
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 3%- 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 3%+
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id /home/serhat/scripts/backlight -i 100 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id /home/serhat/scripts/backlight -d 100 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id /home/serhat/scripts/backlight -i 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id /home/serhat/scripts/backlight -d 20 # decrease screen brightness
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec /home/serhat/scripts/toggletouchpad.sh # toggle touchpad
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
@@ -254,3 +261,11 @@ bindsym --release $mod+p exec --no-startup-id import /tmp/latest-screenshot.png
 
 exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
 exec --no-startup-id nm-applet
+exec --no-startup-id compton
+exec --no-startup-id redshift-gtk
+exec --no-startup-id blueman-applet
+exec --no-startup-id dunst
+# spotify fix
+#for_window [class="^Spotify"] floating enable
+# move workspaces
+bindsym $mod+m move workspace to output left
